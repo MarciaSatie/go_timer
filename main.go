@@ -30,11 +30,24 @@ func main() {
 	button := widget.NewButton("Start Timer", func() {
 		// Convert entry text (string) to int
 		secs, err := strconv.Atoi(entry.Text)
+<<<<<<< HEAD
 		// Comes from Go’s strconv package (“string conversion”).
 		// Atoi means Ascii TO Integer.
 		// It converts a string like "5" → 5 (int).
 		// If the string is not a valid number (like "hello"), it returns an error.
 
+=======
+		// Go lets you catch both return values at once by listing two variables separated by commas.
+		// secs will hold the integer.
+		// err will hold the error.
+
+		// strconv.Atoi()
+		// Comes from Go’s strconv package (“string conversion”).
+		// Atoi means Ascii TO Integer.
+		// It converts a string like "5" → 5 (int).
+		// If the string is not a valid number (like "hello"), it returns an error.
+
+>>>>>>> bdd28e1 (fixing bugs)
 		if err != nil {
 			label.SetText("❌ Please enter a number")
 			return
