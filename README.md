@@ -5,14 +5,14 @@ It runs inside a **Podman container** so that it can be executed on any Linux ma
 
 ---
 
-## � Project Goals
+##  Project Goals
 - Learn how to build desktop GUI apps in Go.
 - Practice containerization with Podman.
 - Show a working, portable example for my portfolio.
 
 ---
 
-## �‍� How I Built This
+## � How I Built This
 I developed this app while learning Go and Fyne step by step.  
 I used **AI (ChatGPT)** as a coding tutor:  
 - to explain Go syntax and concepts in “baby steps,”  
@@ -24,7 +24,7 @@ The goal is to improve my **technical skills** and my **ability to learn new too
 
 ---
 
-## �️ How to Build
+##  How to Build
 
 Clone the repo:
 ```bash
@@ -42,26 +42,8 @@ Run the app (Linux Mint, Ubuntu, Fedora, etc.):
 xhost +local:
 ./run.sh
 
-� Windows (native build, no container needed)
-
-Install Go → https://go.dev/dl/
-
-Clone the repo (PowerShell):
-
-git clone https://github.com/MarciaSatie/go_timer.git
-cd go_timer
-
-
-Fetch dependencies:
-
-go mod tidy
-
-
-Build and run:
-
-go build -o go-timer.exe .
-.\go-timer.exe
-
+Windows (native build, no container needed)
+-- Still trying to fihure it out... ----
 
 This will open the Go Timer window directly as a native Windows application �
 
