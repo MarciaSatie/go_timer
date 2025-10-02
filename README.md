@@ -31,40 +31,44 @@ Clone the repo:
 git clone https://github.com/MarciaSatie/go_timer.git
 cd go_timer
 
-Build the image:
+
+Build the container image:
 
 podman build -t go-timer .
 
-▶️ How to Run
 
-First, allow containers to access your display:
+Run the app (Linux Mint, Ubuntu, Fedora, etc.):
 
 xhost +local:
-
-
-Then run the app:
-
 ./run.sh
 
+� Windows (native build, no container needed)
 
-Or run directly with:
+Install Go → https://go.dev/dl/
 
-podman run --rm -it \
-  --userns keep-id \
-  -e DISPLAY \
-  -e XDG_CONFIG_HOME=/tmp \
-  -e XDG_CACHE_HOME=/tmp \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-  localhost/go-timer
+Clone the repo (PowerShell):
+
+git clone https://github.com/MarciaSatie/go_timer.git
+cd go_timer
 
 
-A window titled "Go Timer" will appear.
-Type the number of seconds, press Start Timer, and the countdown will run.
+Fetch dependencies:
+
+go mod tidy
+
+
+Build and run:
+
+go build -o go-timer.exe .
+.\go-timer.exe
+
+
+This will open the Go Timer window directly as a native Windows application �
 
 � Files
 
-main.go → the Go source code for the timer.
+main.go → Go source code for the timer.
 
-Dockerfile → instructions to build the containerized app.
+Dockerfile → Container build instructions for Linux.
 
-run.sh → convenience script to run the app without typing the long Podman command.
+run.sh → Convenience script to run in Podman (Linux).
