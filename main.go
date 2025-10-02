@@ -2,40 +2,55 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
 
 func main() {
 	fmt.Println("Timer starting...")
 
-	seconds := 5
-
+	//--------- Initiating Fyne ------------------------------------------------
 	myApp := app.New()                      // create a new Fyne app
 	myWindow := myApp.NewWindow("Go Timer") // create a window
 	myWindow.Resize(fyne.NewSize(320, 180)) // ensure visible size
 
-	label := widget.NewLabel(fmt.Sprintf("Seconds left: %d", seconds))
-	myWindow.SetContent(label)
+	// Entry where user types seconds
+	entry := widget.NewEntry()
+	entry.SetPlaceHolder("Enter seconds")
 
-	ticker := time.NewTicker(1 * time.Second)
+	// Label to show countdown
+	label := widget.NewLabel("Waiting for input...")
 
-	// Run countdown in background so UI stays responsive
-	go tictac(seconds, label, ticker)
+	// Button to start timer
+	button := widget.NewButton("Start Timer", func() {
+		// Convert entry text (string) to int
+		secs, err := strconv.Atoi(entry.Text)
+		// Comes from Go’s strconv package (“string conversion”).
+		// Atoi means Ascii TO Integer.
+		// It converts a string like "5" → 5 (int).
+		// If the string is not a valid number (like "hello"), it returns an error.
 
+		if err != nil {
+			label.SetText("❌ Please enter a number")
+			return
+		}
+
+		// Start a goroutine so UI doesn’t freeze
+		go func(seconds int) {
+			for i := seconds; i > 0; i-- {
+				time.Sleep(1 * time.Second)
+				label.SetText(fmt.Sprintf("Seconds left: %d", i-1))
+			}
+			label.SetText("⏰ Time's up!")
+		}(secs)
+	})
+
+	// Put entry, button, and label in a vertical layout
+	myWindow.SetContent(container.NewVBox(entry, button, label))
 	myWindow.ShowAndRun()
-}
-
-// tictac now receives everything it needs
-func tictac(seconds int, label *widget.Label, ticker *time.Ticker) {
-	defer ticker.Stop() // clean up when done, defer will run before the function ends
-
-	for i := seconds; i > 0; i-- {
-		<-ticker.C
-		label.SetText(fmt.Sprintf("Seconds left: %d", i-1))
-	}
-	label.SetText("⏰ Time's up!")
 }
